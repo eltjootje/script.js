@@ -28,7 +28,7 @@
     })
   }
 
-  function $script(paths, idOrDone, optDone) {
+  function $script(paths, idOrDone, optDone, nonce) {
     paths = paths[push] ? paths : [paths]
     var idOrDoneIsDone = idOrDone && idOrDone.call
       , done = idOrDoneIsDone ? idOrDone : optDone
@@ -61,14 +61,19 @@
 
         scripts[path] = 1
         if (id) ids[id] = 1
-        create(path, callback)
+        create(path, callback, nonce)
       })
     }, 0)
     return $script
   }
 
-  function create(path, fn) {
-    var el = doc.createElement('script'), loaded
+  function create(path, fn, nonce) {
+    var el = doc.createElement('script'), loaded;
+    if (typeof nonce === "string") {
+      var at = doc.createAttribute("nonce");
+      at.value = nonce;
+      el.setAttributeNode(at);
+    }
     el.onload = el.onerror = el[onreadystatechange] = function () {
       if ((el[readyState] && !(/^c|loade/.test(el[readyState]))) || loaded) return;
       el.onload = el[onreadystatechange] = null

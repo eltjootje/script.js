@@ -1,3 +1,21 @@
+### Acknowledgements
+
+This is a fork of ded/script.js. All credits go to the original authors. 
+
+### reason for the fork
+
+This fork attempts to introduce 
+compatibility with CSP (Content Security Policy) when combined with script-src directives that use a nonce.
+The generated script tags will include a nonce attribute. This nonce needs to be the same as in the script-src directive.
+
+The nonce can be obtained from a top level script tag as follows:
+
+``` js
+const currentScript = document.currentScript;
+const nonce = currentScript ? currentScript.nonce : "no-nonce";
+```
+---
+
 ### $script.js - Async JavaScript loader & dependency manager
 
 `$script.js` is an asynchronous JavaScript loader and dependency manager with an astonishingly impressive lightweight footprint. Like many other script loaders, $script.js allows you to load script resources on-demand from any URL and not block other resources from loading (like CSS and images). Furthermore, it's unique interface allows developers to work easily with even the most complicated dependencies, which can often be the case for large, complex web applications.
